@@ -143,20 +143,6 @@ Para a o caso de realizar um Post usaremos a seguinte estrutura JSON devidamente
 
 É importante que os dados sigam um padrão para assegurar por exemplo que um email válido seja enviado, por esta razão é possível implementar algoritmos de Regex para validar os padrões.
 
-Nome:
-
-```java
-public Boolean verifyRegexNome(String nome) {
-	String regexNome = "[a-z A-Z]*";
-	Pattern verifyRegex = Pattern.compile(regexNome);
-	Matcher regex = verifyRegex.matcher(nome);
-	if (regex.matches()) {
-		return true;
-	}
-	System.out.println("Nome invalido");
-	return false;
-}
-```
 
 Email:
 
