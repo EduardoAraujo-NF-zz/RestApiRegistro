@@ -1,12 +1,10 @@
-# Rest API Registro
-
 A criação de uma API em Java pode ser um pouco desgastante, visto que será necessário a criação e configuração de vários arquivos para pouco trabalho de código.
 
-Diante deste problema é possível encontrarmos soluções como por exemplo o **Spring Boot**. Com ele é possível iniciarmos a criação de uma API com poucos cliques através de uma configuração guiada e, junto ao Maven, é possível realizar o gerenciamento de dependencias.
+Diante deste problema é possível encontrarmos soluções como por exemplo o **Spring Boot**. Com ele é possível iniciarmos a criação de uma API com poucos cliques através de uma configuração guiada e, junto ao **Maven**, é possível realizar o gerenciamento de dependências.
 
-Para a construção de uma API de registro de usuários é necessário criarmos um database. Dado esta situação é necessário escolhermos um gerenciador de Banco de Dados. No caso optei pelo Mysql.
+Para a construção de uma API de registro de usuários é necessário criarmos um database. Dado esta situação é necessário escolhermos um gerenciador de Banco de Dados. No caso optei pelo **Mysql**.
 
-Como iremos utilizar ferramentas de database é possível adicionarmos o **Spring Data JPA**, se trata de uma tecnologia que usara o Hibernate e que fará a persistência dos dados, trazendo mais praticidade ao realizar uma query no database.
+Como iremos utilizar ferramentas de database é possível adicionarmos o **Spring Data JPA**, se trata de uma tecnologia que usara o **Hibernate** e que fará a persistência dos dados, trazendo mais praticidade ao realizar uma query no database.
 
 ## Criando a Entidade
 
@@ -37,7 +35,7 @@ public class Usuario {
 }
 ```
 
-Também é possível utilizar a anotações `@Column(unique = true)` acima de uma variável para indicar que não pode haver mais de um objeto com o mesmo atributo na tabela. 
+Também é possível utilizar a anotações `@Column(unique = true)` acima de uma variável para indicar que não pode haver mais de um objeto com o mesmo atributo na tabela.
 
 ## Criando o Repositório
 
@@ -50,7 +48,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 }
 ```
 
-## Controller
+## Criando o Controller
 
 Com a Entidade e o Repositório criados precisaremos agora de uma classe Controller para que possamos finalizar a nossa aplicação. Nesta classe faremos os métodos para que nossa API passe a trabalhar como REST API.
 
@@ -64,12 +62,13 @@ Com isso pronto podemos criar Métodos para fazer as requisições HTTP conforme
 - Para uma situação de enviar dados ao database usaremos a anotação `@PostMapping(Caminho)`
 - Para atualizarmos um dado presente no arquivo podemos utilizar a anotação `@PutMapping(Caminho)`
 
-Para a requisição Post torna-se interessante enviarmos um status de respostas HTTP
+Para a requisição Post torna-se interessante enviarmos um status de respostas HTTP.
 
 Usaremos, portando, o tipo `ResponseEntity<Classe Entidade>` no método e poderemos retornar o status de respostas ao serviço.
 
 ```java
 @RestController
+@RequestMapping("/registro")
 public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -94,7 +93,7 @@ public class UsuarioController {
 }
 ```
 
-Com nossa API REST pronta precisaremos agora configurar o mysql. Para isso entraremos na pasta `resources` e abriremos o arquivo `application.properties` .
+Com nossa REST API pronta precisaremos agora configurar o mysql. Para isso entraremos na pasta resources e abriremos o arquivo `application.properties` .
 
 Neste arquivo iremos adicionar as seguintes linhas:
 
@@ -104,7 +103,7 @@ spring.datasource.username={Usuario Mysql}
 spring.datasource.password={Senha Mysql}
 ```
 
-Realize a alteração nos campos {Database}, {Usuario Mysql} e {Senha Mysql} conforme configurado em sua máquina.
+Realize a alteração nos campos *{Database}, {Usuario Mysql} e {Senha Mysql}* conforme configurado em sua máquina.
 
 Feito isso, ainda podemos configurar como o database irá reagir ao iniciarmos a aplicação adicionando a seguinte linha:
 
@@ -128,7 +127,7 @@ Para realizarmos os testes podemos utilizar o Postman.
 
 Após logarmos na aplicação iremos criar uma Collection e adicionar uma requisição.
 
-Selecionaremos qual é o tipo de requisição HTTP e colocaremos `localhost:8080` no campo Request URL.
+Selecionaremos qual é o tipo de requisição HTTP e colocaremos `localhost:8080/registro/` no campo Request URL.
 
 Para a o caso de realizar um Post usaremos a seguinte estrutura JSON devidamente preenchida:
 
@@ -157,6 +156,8 @@ public Boolean verifyRegexNome(String nome) {
 	return false;
 }
 ```
+
+Limitara ao uso apenas de letras.
 
 Email:
 
@@ -187,6 +188,8 @@ public Boolean verifyRegexCpf(String cpf) {
 	return false;
 }
 ```
+
+Limitara a exatamente 11 caracteres sendo eles números.
 
 Data de Nascimento:
 
